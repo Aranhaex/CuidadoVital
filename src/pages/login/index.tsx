@@ -1,10 +1,14 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, TextInput } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image } from "react-native";
 import { styles } from "./styles";
 import Logo from "../../assets/Logo.png";
 import Input from "../../components/Input";
 
 export default function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+
     return (
         <View style={styles.container}>
         <View style={styles.logoContainer}>
@@ -13,9 +17,21 @@ export default function Login() {
         </View>
         <View style={styles.box}>
             
-            <Input placeholder="Digite seu E-mail ou CPF" />
+            <Input 
+                placeholder="Digite seu E-mail ou CPF"
+                value={email}
+                onChangeText={setEmail}
+                iconLeftName="account-outline"
+            />
             
-            <Input placeholder="Digite sua senha" secureTextEntry />
+            <Input 
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Digite sua senha"
+                secureTextEntry={!showPassword}
+                iconRightName={showPassword ? "eye-off-outline" : "eye-outline"}
+                iconRightPress={() => setShowPassword((visible) => !visible)}
+            />
             
         </View>
 

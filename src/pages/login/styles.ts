@@ -39,12 +39,24 @@ export const styles = StyleSheet.create({
     },
     TextInput: {
         width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
         height: 40,
         borderWidth: 1,
         borderColor: theme.colors.cinza,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         marginBottom: 20,
+    },
+    input: {
+        flex: 1,
+        marginHorizontal: 8,
+        padding: 0,
+        backgroundColor: 'transparent',
+    },
+    inputFocused: {
+        borderWidth: 0,
+        outlineWidth: 0,
     }
 
 });
