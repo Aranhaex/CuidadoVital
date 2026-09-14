@@ -1,8 +1,9 @@
 import React, { forwardRef, useState } from "react";
-import { TextInput, TextInputProps, TouchableOpacity, View } from "react-native";
+import { StyleProp, TextInput, TextInputProps, TouchableOpacity, View, ViewStyle } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import {
     mdiAccountOutline,
+    mdiFileDocumentOutline,
     mdiEyeOffOutline,
     mdiEyeOutline,
 } from "@mdi/js";
@@ -11,6 +12,7 @@ import { theme } from "../../global/themes";
 
 const iconPaths = {
     "account-outline": mdiAccountOutline,
+    "file-document-outline": mdiFileDocumentOutline,
     "eye-outline": mdiEyeOutline,
     "eye-off-outline": mdiEyeOffOutline,
 };
@@ -26,6 +28,7 @@ function MdiIcon({ name }: { name: IconName }) {
 }
 
 type Props = TextInputProps & {
+    style?: StyleProp<ViewStyle>;
     iconLeftName?: IconName,
     iconRightName?: IconName,
     iconLeftPress?: () => void,
@@ -38,15 +41,16 @@ export const Input = forwardRef<TextInput, Props>((props, ref) => {
         iconLeftPress,
         iconRightPress,
         placeholderTextColor,
+        style,
         ...rest
     } = props;
     const [isFocused, setIsFocused] = useState(false);
 
     return (
-        <View style={styles.TextInput}>
+        <View style={[styles.TextInput, style]}>
         {iconLeftName && (
             iconLeftPress ? (
-                <TouchableOpacity onPress={iconLeftPress}>
+                <TouchableOpacity onPress={iconLeftPress} hitSlop={8}>
                     <MdiIcon name={iconLeftName} />
                 </TouchableOpacity>
             ) : (
@@ -65,7 +69,7 @@ export const Input = forwardRef<TextInput, Props>((props, ref) => {
 
         {iconRightName && (
             iconRightPress ? (
-                <TouchableOpacity onPress={iconRightPress}>
+                <TouchableOpacity onPress={iconRightPress} hitSlop={8}>
                     <MdiIcon name={iconRightName} />
                 </TouchableOpacity>
             ) : (

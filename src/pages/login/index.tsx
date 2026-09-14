@@ -1,16 +1,30 @@
 import React, { useState } from "react";
-import { View, Text, Image } from "react-native";
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, Image, View } from "react-native";
 import { styles } from "./styles";
 import Logo from "../../assets/Logo.png";
 import Input from "../../components/Input";
+import { theme } from "../../global/themes";
 
-export default function Login() {
+
+type LoginProps = {
+    onCadastroPress: () => void;
+};
+
+export default function Login({ onCadastroPress }: LoginProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+        <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+        >
         <View style={styles.logoContainer}>
             <Image source={Logo} style={styles.boxImage} />
             <Text style={styles.logoText}>Bem-vindo de volta</Text>
@@ -32,9 +46,20 @@ export default function Login() {
                 iconRightName={showPassword ? "eye-off-outline" : "eye-outline"}
                 iconRightPress={() => setShowPassword((visible) => !visible)}
             />
-            
-        </View>
+            <Text style={{ color: theme.colors.links, marginBottom: 10, alignSelf: "flex-end" }}>Esqueceu a senha?</Text>
+
+            <Pressable style={styles.button} onPress={() => {}}>
+              <Text style={styles.buttonText}>Entrar</Text>
+            </Pressable>
+            <Text style={{ color: theme.colors.links, marginTop: 10 }}>Entrar com CPF</Text>
+            <Text style={{ color: theme.colors.links, marginTop: 10 }}>
+                Não possui uma conta?{' '}
+                <Text style={{ fontWeight: "bold" }} onPress={onCadastroPress}>Cadastre-se</Text>
+            </Text>
 
         </View>
+        </ScrollView>
+
+        </KeyboardAvoidingView>
     );
 }
